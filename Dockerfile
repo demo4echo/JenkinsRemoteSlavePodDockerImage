@@ -4,6 +4,7 @@ ENV DOCKER_VERSION 18.06.3-ce
 ENV KUBECTL_VERSION v1.14.3
 ENV HELM_VERSION v2.14.1
 ENV GLIBC_VERSION 2.29-r0
+ENV ENV /root/.profile
 
 WORKDIR /root
 
@@ -40,6 +41,9 @@ RUN apk update; \
 # These 2 will be copied during the build process itself in Jenkins Pipeline
 #COPY ./.docker/ ./.docker/
 #COPY ./.kube/ ./.kube/
+
+# Copy the shell initiation script to the container
+COPY ./.profile /root/.profile
 
 CMD ["/bin/sh"]
 
