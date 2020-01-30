@@ -12,6 +12,7 @@ WORKDIR /root
 RUN apk update; \
 	apk upgrade; \
 	apk add curl; \
+	apk add git; \
 # Install docker:
 	curl -LO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz; \
 	mkdir -p /usr/local/sbin; \
