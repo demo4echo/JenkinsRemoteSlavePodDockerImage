@@ -13,12 +13,15 @@ RUN apk update; \
 	apk upgrade; \
 	apk add curl; \
 	apk add git; \
-# Install docker:
+# Install docker client (and daemon), jumpstart the daemon, and run a sanity test:
 	curl -LO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz; \
 	mkdir -p /usr/local/sbin; \
-	tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/sbin docker/docker; \
+	tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/sbin docker/*; \
 	ln -s /usr/local/sbin/docker /bin/docker; \
+	ln -s /usr/local/sbin/dockerd /bin/dockerd; \
 	rm docker-${DOCKER_VERSION}.tgz; \
+	/bin/dockerd &; \
+	/bin/docker run hello-world; \
 # Install kubectl:
 	curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl; \
 	chmod +x ./kubectl; \
