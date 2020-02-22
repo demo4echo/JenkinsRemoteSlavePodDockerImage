@@ -21,7 +21,7 @@ RUN apk update; \
 	curl -LO https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip; \
 	mkdir /opt/gradle; \
 	unzip -d /opt/gradle gradle-${GRADLE_VERSION}-bin.zip; \
-	ln -s /usr/local/sbin/gradle /opt/gradle/gradle-${GRADLE_VERSION}/bin/gradle; \
+	ln -s /opt/gradle/gradle-${GRADLE_VERSION}/bin/gradle /bin/gradle; \
 	rm gradle-${GRADLE_VERSION}-bin.zip; \
 # Install docker client:
 	curl -LO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz; \
