@@ -13,11 +13,10 @@ WORKDIR /root
 # Update the package manager and install needed utilities/add-ons:
 RUN apk update; \
 	apk upgrade; \
-	apk add zsh; \
 	apk add curl; \
 	apk add git; \
 	apk add zip; \
-	apk add docker; \
+#	apk add docker; \
 # Install Gradle:
 	curl -LO https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip; \
 	mkdir /opt/gradle; \
@@ -25,11 +24,11 @@ RUN apk update; \
 	ln -s /usr/local/sbin/gradle /opt/gradle/gradle-${GRADLE_VERSION}/bin/gradle; \
 	rm gradle-${GRADLE_VERSION}-bin.zip; \
 # Install docker client:
-#	curl -LO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz; \
-#	mkdir -p /usr/local/sbin; \
-#	tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/sbin docker/docker; \
-#	ln -s /usr/local/sbin/docker /bin/docker; \
-#	rm docker-${DOCKER_VERSION}.tgz; \
+	curl -LO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz; \
+	mkdir -p /usr/local/sbin; \
+	tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/sbin docker/docker; \
+	ln -s /usr/local/sbin/docker /bin/docker; \
+	rm docker-${DOCKER_VERSION}.tgz; \
 # Install kubectl:
 	curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl; \
 	chmod +x ./kubectl; \
