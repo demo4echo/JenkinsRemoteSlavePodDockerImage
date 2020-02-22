@@ -4,8 +4,8 @@ ENV ENV /root/.profile
 
 ENV GRADLE_VERSION 5.6.4
 ENV DOCKER_VERSION 18.06.3-ce
-ENV KUBECTL_VERSION v0.17.0
-ENV HELM_VERSION v2.16.1
+ENV KUBECTL_VERSION 0.17.0
+ENV HELM_VERSION 2.16.1
 ENV GLIBC_VERSION 2.30-r0
 
 WORKDIR /root
@@ -39,17 +39,17 @@ RUN apk update; \
 	ln -s /usr/local/sbin/docker /bin/docker; \
 	rm docker-${DOCKER_VERSION}.tgz; \
 # Install kubectl:
-	curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl; \
+	curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl; \
 	chmod +x ./kubectl; \
 	mv ./kubectl /usr/local/sbin; \
 	ln -s /usr/local/sbin/kubectl /bin/kubectl; \
 # Install helm:
-	curl -LO https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz; \
-	gunzip ./helm-${HELM_VERSION}-linux-amd64.tar.gz; \
-	tar x -vf ./helm-${HELM_VERSION}-linux-amd64.tar; \
+	curl -LO https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz; \
+	gunzip ./helm-v${HELM_VERSION}-linux-amd64.tar.gz; \
+	tar x -vf ./helm-v${HELM_VERSION}-linux-amd64.tar; \
 	mv linux-amd64/helm /usr/local/sbin/; \
 	ln -s /usr/local/sbin/helm /bin/helm; \
-	rm helm-${HELM_VERSION}-linux-amd64.tar; \
+	rm helm-v${HELM_VERSION}-linux-amd64.tar; \
 	rm -rf linux-amd64/; \
 # Install glibc (Alpine has the musl compiler instead):
 	apk --no-cache add ca-certificates wget; \
