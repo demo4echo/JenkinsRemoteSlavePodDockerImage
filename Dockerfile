@@ -1,27 +1,35 @@
 FROM openjdk:8-jdk-alpine
 
+ENV ENV /root/.profile
+
+ENV GRADLE_VERSION 5.6.4
 ENV DOCKER_VERSION 18.06.3-ce
 ENV KUBECTL_VERSION v0.17.0
 ENV HELM_VERSION v2.16.1
 ENV GLIBC_VERSION 2.30-r0
-ENV ENV /root/.profile
 
 WORKDIR /root
 
-# Update the package manager and install curl:
+# Update the package manager and install needed utilities/add-ons:
 RUN apk update; \
 	apk upgrade; \
+	apk add zsh; \
 	apk add curl; \
 	apk add git; \
-# Install docker client (and daemon), jumpstart the daemon, and run a sanity test:
-	curl -LO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz; \
-	mkdir -p /usr/local/sbin; \
-	tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/sbin docker/*; \
-	ln -s /usr/local/sbin/docker /bin/docker; \
-	ln -s /usr/local/sbin/dockerd /bin/dockerd; \
-	rm docker-${DOCKER_VERSION}.tgz; \
-	/bin/dockerd &; \
-	/bin/docker run hello-world; \
+	apk add zip; \
+	apk add docker; \
+# Install Gradle:
+	curl -LO https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip; \
+	mkdir /opt/gradle; \
+	unzip -d /opt/gradle gradle-${GRADLE_VERSION}-bin.zip; \
+	ln -s /usr/local/sbin/gradle /opt/gradle/gradle-${GRADLE_VERSION}/bin/gradle; \
+	rm gradle-${GRADLE_VERSION}-bin.zip; \
+# Install docker client:
+#	curl -LO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz; \
+#	mkdir -p /usr/local/sbin; \
+#	tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 -C /usr/local/sbin docker/docker; \
+#	ln -s /usr/local/sbin/docker /bin/docker; \
+#	rm docker-${DOCKER_VERSION}.tgz; \
 # Install kubectl:
 	curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl; \
 	chmod +x ./kubectl; \
@@ -42,14 +50,10 @@ RUN apk update; \
 	apk add glibc-${GLIBC_VERSION}.apk; \
 	rm glibc-${GLIBC_VERSION}.apk	
 
-# These 2 will be copied during the build process itself in Jenkins Pipeline
-#COPY ./.docker/ ./.docker/
-#COPY ./.kube/ ./.kube/
-
 # Copy the shell initiation script to the container
 COPY ./.profile /root/.profile
 
 CMD ["/bin/sh"]
 
 LABEL maintainer="tiran.meltser@efrat.com"
-LABEL description="A docker image with JDK, docker client, kubectl client and helm client"
+LABEL description="A docker image with Open-JDK, docker, kubectl, helm and glibc compiler"
