@@ -1,10 +1,14 @@
 @echo off
 
+SET REPOSITORY_NAME="demo4echo"
+SET IMAGE_NAME="ubuntu_k8scdk"
+SET IMAGE_TAG="latest"
+
 @REM Build the image
-docker build -t alpine_openjdk8_k8scdk .
+docker build -t %IMAGE_NAME%:%IMAGE_TAG% .
 
 @REM Tag the image
-docker tag alpine_openjdk8_k8scdk demo4echo/alpine_openjdk8_k8scdk
+docker tag %IMAGE_NAME%:%IMAGE_TAG% %REPOSITORY_NAME%/%IMAGE_NAME%:%IMAGE_TAG%
 
 @REM Push the image
-docker push demo4echo/alpine_openjdk8_k8scdk
+docker push %REPOSITORY_NAME%/%IMAGE_NAME%:%IMAGE_TAG%
