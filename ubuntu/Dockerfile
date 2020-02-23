@@ -23,6 +23,8 @@ RUN apt-get update -y -qq; \
 	source "$HOME/.sdkman/bin/sdkman-init.sh"; \
 # Install JDK (with sdkman):
 	sdk install java ${JDK_SDKMAN_VERSION}; \
+# Externalize the JAVA_HOME env variable to be used later on for sh shell support (workaround)
+	export PUBLISHED_JAVA_HOME=$JAVA_HOME
 # Install Gradle (with sdkman):
 	sdk install gradle ${GRADLE_VERSION}; \
 # Initialize Gradle wrapper (and trigger Gradle distribution download):
@@ -55,7 +57,7 @@ COPY ./.profile /root/.profile
 
 # Add workaround since sdkman handles only bash and zsh shells, but not sh!
 # Note: this line must come after the .profile file has been copied to the image!
-RUN  echo JAVA_HOME=$JAVA_HOME >> /root/.profile
+RUN  echo JAVA_HOME=$PUBLISHED_JAVA_HOME >> /root/.profile
 
 LABEL maintainer="tiran.meltser@efrat.com"
 
