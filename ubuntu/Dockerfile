@@ -11,14 +11,14 @@ ENV HELM_VERSION 2.16.1
 WORKDIR /root
 
 # Update the package manager and install needed utilities/add-ons:
-RUN apt-get update; \
+RUN apt-get update -y -qq; \
 	apt-get install curl -y -qq; \
 	apt-get install git -y -qq; \
 	apt-get install zip -y -qq; \
 #	apt-get install docker -y -qq; \
 # Install SDK Manager (sdkman):
 	curl -s "https://get.sdkman.io" | bash; \
-	source "$HOME/.sdkman/bin/sdkman-init.sh"; \
+	. "$HOME/.sdkman/bin/sdkman-init.sh"; \
 # Install JDK (with sdkman):
 	sdk install java ${JDK_SDKMAN_VERSION}; \
 # Install Gradle (with sdkman):
@@ -46,7 +46,7 @@ RUN apt-get update; \
 	mv linux-amd64/helm /usr/local/sbin/; \
 	ln -s /usr/local/sbin/helm /bin/helm; \
 	rm helm-v${HELM_VERSION}-linux-amd64.tar; \
-	rm -rf linux-amd64/; \
+	rm -rf linux-amd64/
 
 # Copy the shell initiation script to the container
 COPY ./.profile /root/.profile
