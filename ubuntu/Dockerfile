@@ -10,6 +10,8 @@ ENV HELM_VERSION 2.16.1
 
 WORKDIR /root
 
+SHELL ["bash","-c"]
+
 # Update the package manager and install needed utilities/add-ons:
 RUN apt-get update -y -qq; \
 	apt-get install curl -y -qq; \
@@ -18,7 +20,7 @@ RUN apt-get update -y -qq; \
 #	apt-get install docker -y -qq; \
 # Install SDK Manager (sdkman):
 	curl -s "https://get.sdkman.io" | bash; \
-	. "$HOME/.sdkman/bin/sdkman-init.sh"; \
+	source "$HOME/.sdkman/bin/sdkman-init.sh"; \
 # Install JDK (with sdkman):
 	sdk install java ${JDK_SDKMAN_VERSION}; \
 # Install Gradle (with sdkman):
@@ -50,8 +52,6 @@ RUN apt-get update -y -qq; \
 
 # Copy the shell initiation script to the container
 COPY ./.profile /root/.profile
-
-CMD ["/bin/sh"]
 
 LABEL maintainer="tiran.meltser@efrat.com"
 

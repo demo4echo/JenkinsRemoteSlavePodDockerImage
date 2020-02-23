@@ -62,8 +62,6 @@ RUN apk update; \
 # Copy the shell initiation script to the container
 COPY ./.profile /root/.profile
 
-CMD ["/bin/sh"]
-
 LABEL maintainer="tiran.meltser@efrat.com"
 
 LABEL description="A application builder based on: openjdk8, gradle v${GRADLE_VERSION}, docker v${DOCKER_VERSION}, kubectl v${KUBECTL_VERSION}, helm v${HELM_VERSION} and glibc v${GLIBC_VERSION}"
