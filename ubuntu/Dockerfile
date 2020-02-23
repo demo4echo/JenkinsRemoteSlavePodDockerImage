@@ -53,6 +53,10 @@ RUN apt-get update -y -qq; \
 # Copy the shell initiation script to the container
 COPY ./.profile /root/.profile
 
+# Add workaround since sdkman handles only bash and zsh shells, but not sh!
+# Note: this line must come after the .profile file has been copied to the image!
+RUN  echo JAVA_HOME=$JAVA_HOME >> /root/.profile
+
 LABEL maintainer="tiran.meltser@efrat.com"
 
 LABEL description="A application builder based on: JDK v${JDK_SDKMAN_VERSION}, gradle v${GRADLE_VERSION}, docker v${DOCKER_VERSION}, kubectl v${KUBECTL_VERSION} and helm v${HELM_VERSION}"
