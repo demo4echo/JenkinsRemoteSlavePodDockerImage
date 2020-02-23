@@ -27,10 +27,11 @@ RUN apk update; \
 	mkdir -p /tmp/gradle; \
 	cd /tmp/gradle; \
 	gradle wrapper --gradle-version=${GRADLE_VERSION}; \
-	./gradlew; \
+	./gradlew --no-daemon; \
 	cd -;\
 	rm -rf /tmp/gradle; \
 # Cleanup Gradle distribution as it is not needed anymore:
+	rm /bin/gradle; \
 	rm -rf /opt/gradle; \
 # Install docker client:
 	curl -LO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz; \
