@@ -26,7 +26,7 @@ RUN apk update; \
 # Initialize Gradle wrapper (and trigger Gradle distribution download):
 	mkdir -p /tmp/gradle; \
 	cd /tmp/gradle; \
-	gradle wrapper --gradle-version=${GRADLE_VERSION}; \
+	gradle wrapper --no-daemon --gradle-version=${GRADLE_VERSION}; \
 	./gradlew --no-daemon; \
 	cd -;\
 	rm -rf /tmp/gradle; \
