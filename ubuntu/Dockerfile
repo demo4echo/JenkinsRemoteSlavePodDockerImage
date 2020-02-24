@@ -10,9 +10,6 @@ ENV HELM_VERSION 2.16.1
 
 WORKDIR /root
 
-# Copy the shell initiation script to the container
-COPY ./.profile /root/.profile
-
 SHELL ["bash","-c"]
 
 # Update the package manager and install needed utilities/add-ons:
@@ -26,9 +23,6 @@ RUN apt-get update -y -qq; \
 	source "$HOME/.sdkman/bin/sdkman-init.sh"; \
 # Install JDK (with sdkman):
 	sdk install java ${JDK_SDKMAN_VERSION}; \
-# Add workaround since sdkman handles only bash and zsh shells, but not sh!
-# Note: this line must come after the .profile file has been copied to the image!
-	echo JAVA_HOME=`which java` >> /root/.profile; \
 # Install Gradle (with sdkman):
 	sdk install gradle ${GRADLE_VERSION}; \
 # Initialize Gradle wrapper (and trigger Gradle distribution download):
@@ -55,6 +49,8 @@ RUN apt-get update -y -qq; \
 	ln -s /usr/local/sbin/helm /bin/helm; \
 	rm helm-v${HELM_VERSION}-linux-amd64.tar; \
 	rm -rf linux-amd64/
+
+COPY ./.profile /root/.profile
 
 LABEL maintainer="tiran.meltser@efrat.com"
 
