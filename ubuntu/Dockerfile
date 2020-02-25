@@ -10,6 +10,8 @@ ENV HELM_VERSION 2.16.1
 
 WORKDIR /root
 
+COPY ./.profile /root/.profile
+
 SHELL ["bash","-c"]
 
 # Update the package manager and install needed utilities/add-ons:
@@ -24,12 +26,14 @@ RUN apt-get update -y -qq; \
 # Install JDK (with sdkman):
 	sdk install java ${JDK_SDKMAN_VERSION}; \
 # Install Gradle (with sdkman):
-	sdk install gradle ${GRADLE_VERSION}; \
+#	sdk install gradle ${GRADLE_VERSION}; \
 # Initialize Gradle wrapper (and trigger Gradle distribution download):
-	gradle wrapper --no-daemon --gradle-version=${GRADLE_VERSION}; \
-	./gradlew --no-daemon; \
+#	gradle wrapper --no-daemon --gradle-version=${GRADLE_VERSION}; \
+#	./gradlew --no-daemon; \
 # Cleanup Gradle distribution as it is not needed anymore:
-	sdk uninstall gradle ${GRADLE_VERSION}; \
+#	sdk uninstall gradle ${GRADLE_VERSION}; \
+# WA for java on bourne shell (sh)
+	echo JAVA_HOME=`which java` >> /root/.profile; \
 # Install docker client:
 	curl -LO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz; \
 	mkdir -p /usr/local/sbin; \
@@ -49,8 +53,6 @@ RUN apt-get update -y -qq; \
 	ln -s /usr/local/sbin/helm /bin/helm; \
 	rm helm-v${HELM_VERSION}-linux-amd64.tar; \
 	rm -rf linux-amd64/
-
-COPY ./.profile /root/.profile
 
 LABEL maintainer="tiran.meltser@efrat.com"
 
