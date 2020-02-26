@@ -34,7 +34,7 @@ RUN apt-get update -y -qq; \
 # Cleanup Gradle distribution as it is not needed anymore:
 #	sdk uninstall gradle ${GRADLE_VERSION}; \
 # WA for java on bourne shell (sh)
-	echo JAVA_HOME=`which java` >> /root/.profile; \
+	echo export JAVA_HOME=`which java` >> /root/.profile; \
 # Install docker client:
 	curl -LO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz; \
 	mkdir -p /usr/local/sbin; \
