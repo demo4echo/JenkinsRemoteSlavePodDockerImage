@@ -14,7 +14,7 @@ docker build -t %IMAGE_NAME%:%IMAGE_TAG% .
 DEL .profile
 
 @REM Tag the image
-rem docker tag %IMAGE_NAME%:%IMAGE_TAG% %REPOSITORY_NAME%/%IMAGE_NAME%:%IMAGE_TAG%
+docker tag %IMAGE_NAME%:%IMAGE_TAG% %REPOSITORY_NAME%/%IMAGE_NAME%:%IMAGE_TAG%
 
 @REM Push the image
-rem docker push %REPOSITORY_NAME%/%IMAGE_NAME%:%IMAGE_TAG%
+docker push %REPOSITORY_NAME%/%IMAGE_NAME%:%IMAGE_TAG%
