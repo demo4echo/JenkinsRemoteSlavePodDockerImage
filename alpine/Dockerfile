@@ -10,6 +10,9 @@ ENV GLIBC_VERSION 2.30-r0
 
 WORKDIR /root
 
+# Copy the shell initiation script to the container
+COPY ./.profile /root/.profile
+
 # Update the package manager and install needed utilities/add-ons:
 RUN apk update; \
 	apk upgrade; \
@@ -58,9 +61,6 @@ RUN apk update; \
 	wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk; \
 	apk add glibc-${GLIBC_VERSION}.apk; \
 	rm glibc-${GLIBC_VERSION}.apk	
-
-# Copy the shell initiation script to the container
-COPY ./.profile /root/.profile
 
 LABEL maintainer="tiran.meltser@efrat.com"
 

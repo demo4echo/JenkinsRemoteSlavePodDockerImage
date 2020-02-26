@@ -10,6 +10,7 @@ ENV HELM_VERSION 2.16.1
 
 WORKDIR /root
 
+# Copy the shell initiation script to the container
 COPY ./.profile /root/.profile
 
 SHELL ["bash","-c"]
