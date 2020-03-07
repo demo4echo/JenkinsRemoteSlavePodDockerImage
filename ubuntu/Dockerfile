@@ -57,4 +57,4 @@ RUN apt-get update -y -qq; \
 
 LABEL maintainer="tiran.meltser@efrat.com"
 
-LABEL description="A application builder based on: JDK v${JDK_SDKMAN_VERSION}, gradle v${GRADLE_VERSION}, docker v${DOCKER_VERSION}, kubectl v${KUBECTL_VERSION} and helm v${HELM_VERSION}"
+LABEL description="An application builder based on: JDK v${JDK_SDKMAN_VERSION}, gradle v${GRADLE_VERSION}, docker v${DOCKER_VERSION}, kubectl v${KUBECTL_VERSION} and helm v${HELM_VERSION}"

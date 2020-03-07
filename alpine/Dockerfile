@@ -64,4 +64,4 @@ RUN apk update; \
 
 LABEL maintainer="tiran.meltser@efrat.com"
 
-LABEL description="A application builder based on: openjdk8, gradle v${GRADLE_VERSION}, docker v${DOCKER_VERSION}, kubectl v${KUBECTL_VERSION}, helm v${HELM_VERSION} and glibc v${GLIBC_VERSION}"
+LABEL description="An application builder based on: openjdk8, gradle v${GRADLE_VERSION}, docker v${DOCKER_VERSION}, kubectl v${KUBECTL_VERSION}, helm v${HELM_VERSION} and glibc v${GLIBC_VERSION}"
